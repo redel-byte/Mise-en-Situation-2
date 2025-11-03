@@ -18,15 +18,18 @@ function updateCount() {
  * Fonction pour filtrer les éléments de la liste en fonction de leur taille
  * @param {number} maxSize - La taille maximale des éléments à afficher
  */
-function filterItemsBySize(maxSize) {
-  const items = Array.from(itemList.children);
 
+function filterItemsBySize(maxSize) {
+  const inputValue = sizeInput.value;
+  const items = Array.from(itemList.children);
+  items.forEach(item => {
+    if(item.textContent.length > inputValue){
+      item.style.display = "none";}
+    });
   // TODO: Parcourir les éléments et afficher uniquement ceux
   // dont la longueur du texte est égale ou inférieure à maxSize.
   // Utilisez item.style.display pour gérer l'affichage.
-  
   // Piste pour la boucle : items.forEach(item => { ... });
-  
   // Ne pas oublier de mettre à jour le compteur d'éléments visibles
   updateCount();
 }
@@ -36,6 +39,15 @@ function filterItemsBySize(maxSize) {
  */
 function sortItemsAlphabetically() {
   const items = Array.from(itemList.children);
+  const newArray = [];
+  let i = 0 ;
+  for(item of items){
+  newArray[i] = item.textContent;
+    i++;
+}
+  sortButton.addEventListener("click",(e) => {
+    newArray.sort();
+  })
 
   // TODO: Filtrer les éléments visibles, les trier par ordre alphabétique
   // avec localeCompare, puis les réinsérer dans itemList dans l'ordre.
@@ -56,8 +68,6 @@ function resetList() {
     li.textContent = text;
     itemList.appendChild(li);
   });
-
-  // Réinitialiser le champ de saisie et le compteur
   sizeInput.value = '';
   updateCount();
 }
